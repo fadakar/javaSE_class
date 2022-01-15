@@ -6,38 +6,30 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        double x, y, z, t = 0;
+        String formal = "( (%1$f +6) + %2$f)^2 * (%3$f / (%4$f +4)) / (%3$f * (%4$f + 4) ) + (%1$f - %4$f)";
 
-        do {
-            try {
-                System.out.print("Enter Your first name: ");
-                String firstName = scanner.nextLine();
-                System.out.print("Enter Your last name: ");
-                String lastName = scanner.nextLine();
+        System.out.print("enter x:");
+        x = scanner.nextDouble();
 
-                System.out.print("Enter Your national code: ");
-                String code = scanner.nextLine();
+        System.out.print("enter y:");
+        y = scanner.nextDouble();
 
-                System.out.print("Enter Your birthday: ");
-                String birthday = scanner.nextLine();
+        System.out.print("enter w:");
+        z = scanner.nextDouble();
 
-                System.out.print("print enter your age: ");
-                String age = scanner.nextLine();
-                int ageInt = Integer.parseInt(age);
-                ageInt += 2;
+        System.out.print("enter t:");
+        t = scanner.nextDouble();
 
-                // -------------- print result ----------------
-                System.out.println("-------------------------------------");
-                System.out.println("full name: " + firstName + " " + lastName);
-                System.out.println("national code: " + code);
-                System.out.println("birthday: " + birthday);
-                System.out.print("Your age is: ");
-                System.out.println(ageInt);
-                break;
-            } catch (NumberFormatException ex) {
-                System.out.println("Your entered age is invalid");
-            }
-        } while (true);
+        double answer = ((x + 6) + y);
+        answer = Math.pow(answer, 2);
+        answer = answer * (z / (t + 4)) / (z * (t + 4)) + (x - t);
 
-
+        // -------------- print result -----------------
+        System.out.print(answer);
+        System.out.print(" = ");
+        System.out.println(
+                String.format(formal, x, y, z, t)
+        );
     }
 }
