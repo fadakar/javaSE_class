@@ -6,30 +6,31 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        double x, y, z, t = 0;
-        String formal = "( (%1$f +6) + %2$f)^2 * (%3$f / (%4$f +4)) / (%3$f * (%4$f + 4) ) + (%1$f - %4$f)";
 
-        System.out.print("enter x:");
-        x = scanner.nextDouble();
 
-        System.out.print("enter y:");
-        y = scanner.nextDouble();
+        System.out.print("Enter you age:");
+        int age = scanner.nextInt();
+        if (age > 0 && age < 3) {
+            System.out.println("nozad");
+        } else if (age >= 3 && age < 7) {
+            System.out.println("khordsal");
+        } else if (age >= 7 && age < 14) {
+            System.out.println("no javan");
+        } else if (age >= 14 && age < 25) {
+            System.out.println("javan");
+        } else if (age >= 25 && age < 40) {
+            System.out.println("miyan sal");
+        } else if (age >= 40 && age < 60) {
+            System.out.println("kohan sal");
+        } else if (age >= 60 && age < 80) {
+            System.out.println("salmand");
+        } else if (age >= 80 && age < 100) {
+            System.out.println("khoda biyamorz");
+        } else if (age >= 100) {
+            System.out.println("balaye 100");
+        } else {
+            System.out.println("person age not found");
+        }
 
-        System.out.print("enter w:");
-        z = scanner.nextDouble();
-
-        System.out.print("enter t:");
-        t = scanner.nextDouble();
-
-        double answer = ((x + 6) + y);
-        answer = Math.pow(answer, 2);
-        answer = answer * (z / (t + 4)) / (z * (t + 4)) + (x - t);
-
-        // -------------- print result -----------------
-        System.out.print(answer);
-        System.out.print(" = ");
-        System.out.println(
-                String.format(formal, x, y, z, t)
-        );
     }
 }
