@@ -18,19 +18,13 @@ public class Main {
             if (clientNumber == selectNumber) {
                 break;
             } else if (selectNumber > clientNumber) {
-                System.out.println(
-                        String.format("my number is bigger than %1$d", clientNumber)
-                );
+                System.out.println("my number is bigger than " + clientNumber);
             } else if (selectNumber < clientNumber) {
-                System.out.println(
-                        String.format("my number is smaller than %1$d", clientNumber)
-                );
+                System.out.println("my number is smaller than " + clientNumber);
             }
             counter++;
         } while (true);
 
-        System.out.println(
-                String.format("You found number %1$d by %2$d guess", selectNumber, counter)
-        );
+        System.out.println("You found number " + selectNumber + " by " + counter + " guess");
     }
 }
