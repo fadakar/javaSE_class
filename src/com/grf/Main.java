@@ -6,56 +6,24 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int number1, number2, answer, selectMenu = 0;
 
-        do {
-            System.out.println("[1]: +");
-            System.out.println("[2]: -");
-            System.out.println("[3]: *");
-            System.out.println("[4]: /");
-            System.out.println("[5]: exit");
-            System.out.print("select Menu: ");
-            selectMenu = scanner.nextInt();
-            switch (selectMenu) {
-                case 1:
-                    System.out.print("Enter Number 1:");
-                    number1 = scanner.nextInt();
-                    System.out.print("Enter Number 2:");
-                    number2 = scanner.nextInt();
-                    answer = number1 + number2;
-                    System.out.println(number1 + " + " + number2 + " = " + answer);
-                    break;
-                case 2:
-                    System.out.print("Enter Number 1:");
-                    number1 = scanner.nextInt();
-                    System.out.print("Enter Number 2:");
-                    number2 = scanner.nextInt();
-                    answer = number1 - number2;
-                    System.out.println(number1 + " - " + number2 + " = " + answer);
-                    break;
-                case 3:
-                    System.out.print("Enter Number 1:");
-                    number1 = scanner.nextInt();
-                    System.out.print("Enter Number 2:");
-                    number2 = scanner.nextInt();
-                    answer = number1 * number2;
-                    System.out.println(number1 + " * " + number2 + " = " + answer);
-                    break;
-                case 4:
-                    System.out.print("Enter Number 1:");
-                    number1 = scanner.nextInt();
-                    System.out.print("Enter Number 2:");
-                    number2 = scanner.nextInt();
-                    answer = number1 / number2;
-                    System.out.println(number1 + " / " + number2 + " = " + answer);
-                    break;
-                case 5:
-                    System.exit(0);
+        // names array
+        String names[] = new String[2]; // byad hatman andaze array moshakhas shavad agar dynamic niyaz hast az ArrayList estefade mikonim
+        names[0] = "ali";
+        names[1] = "hasan";
 
-            }
-            System.out.println("---------------------------------");
-        } while (true);
+       for (String name :names){
+           System.out.println(name);
+       }
+
+       // numbers array
+        int numbers[] = new int[2];
+        numbers[0] = 44;
+        numbers[1] = 56;
+
+        for (int number :numbers){
+            System.out.println(number);
+        }
 
     }
 }
