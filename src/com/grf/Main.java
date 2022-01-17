@@ -1,30 +1,61 @@
 package com.grf;
 
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Random rnd = new Random();
-        int selectNumber = rnd.nextInt(100);
-        System.out.println("We are selected number between 0 to 100, guess it");
         Scanner scanner = new Scanner(System.in);
-        int counter = 1;
+        int number1, number2, answer, selectMenu = 0;
 
         do {
-            System.out.print("Enter Your guess number:");
-            int clientNumber = scanner.nextInt();
-            if (clientNumber == selectNumber) {
-                break;
-            } else if (selectNumber > clientNumber) {
-                System.out.println("my number is bigger than " + clientNumber);
-            } else if (selectNumber < clientNumber) {
-                System.out.println("my number is smaller than " + clientNumber);
+            System.out.println("[1]: +");
+            System.out.println("[2]: -");
+            System.out.println("[3]: *");
+            System.out.println("[4]: /");
+            System.out.println("[5]: exit");
+            System.out.print("select Menu: ");
+            selectMenu = scanner.nextInt();
+            switch (selectMenu) {
+                case 1:
+                    System.out.print("Enter Number 1:");
+                    number1 = scanner.nextInt();
+                    System.out.print("Enter Number 2:");
+                    number2 = scanner.nextInt();
+                    answer = number1 + number2;
+                    System.out.println(number1 + " + " + number2 + " = " + answer);
+                    break;
+                case 2:
+                    System.out.print("Enter Number 1:");
+                    number1 = scanner.nextInt();
+                    System.out.print("Enter Number 2:");
+                    number2 = scanner.nextInt();
+                    answer = number1 - number2;
+                    System.out.println(number1 + " - " + number2 + " = " + answer);
+                    break;
+                case 3:
+                    System.out.print("Enter Number 1:");
+                    number1 = scanner.nextInt();
+                    System.out.print("Enter Number 2:");
+                    number2 = scanner.nextInt();
+                    answer = number1 * number2;
+                    System.out.println(number1 + " * " + number2 + " = " + answer);
+                    break;
+                case 4:
+                    System.out.print("Enter Number 1:");
+                    number1 = scanner.nextInt();
+                    System.out.print("Enter Number 2:");
+                    number2 = scanner.nextInt();
+                    answer = number1 / number2;
+                    System.out.println(number1 + " / " + number2 + " = " + answer);
+                    break;
+                case 5:
+                    System.exit(0);
+
             }
-            counter++;
+            System.out.println("---------------------------------");
         } while (true);
 
-        System.out.println("You found number " + selectNumber + " by " + counter + " guess");
     }
 }
