@@ -5,13 +5,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Mobile mobile = new Mobile();
-        mobile.model = "Iphone 13";
-        mobile.color = "gray";
-        mobile.charge = 80;
-        mobile.number = "0912000000";
+        Person person1 = new Person("hassan","ahmadi","2323", 32);
+        Person person2 = new Person("ali","rezaee","2334", 32);
+        Person person3 = new Person("reza","mohmadi","4345", 32);
 
-        System.out.println(mobile.toString());
 
+        System.out.println(person1.toString());
+        System.out.println("--------------------------------------");
+        System.out.println(person2.toString());
+        System.out.println("--------------------------------------");
+        System.out.println(person3.toString());
     }
 }
