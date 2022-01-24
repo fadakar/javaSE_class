@@ -1,26 +1,39 @@
 package com.grf;
 
 public class Person {
-    
+
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String codeMeli, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.codeMeli = codeMeli;
+    public Person(String name, int age) {
+        setAge(age);
+        setName(name);
+    }
+
+    private String name;
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public String firstName;
-    public String lastName;
-    public String codeMeli;
-    public int age;
-
+    @Override
     public String toString() {
-        return "firstName: " + this.firstName + "\n" +
-                "lastname: " + this.lastName + "\n" +
-                "code meli: " + this.codeMeli + "\n" +
-                "age: " + this.age;
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
