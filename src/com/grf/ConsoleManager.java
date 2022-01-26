@@ -67,7 +67,7 @@ public class ConsoleManager {
     private void searchPerson(String name) {
         for (Person person : persons) {
             if (person.getName().toLowerCase().equals(name)) {
-                System.out.println("Founded: " + person.toString());
+                System.out.println("Found: " + person.toString());
             }
         }
         divider();
@@ -76,7 +76,7 @@ public class ConsoleManager {
     private void searchPerson(int age) {
         for (Person person : persons) {
             if (person.getAge() == age) {
-                System.out.println("Founded: " + person.toString());
+                System.out.println("Found: " + person.toString());
             }
         }
         divider();
