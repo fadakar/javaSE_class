@@ -1,35 +1,44 @@
 package com.grf;
 
-import com.grf.Human.Human;
-
-import java.util.ArrayList;
+import com.grf.vehicle.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<Human> humanArrayList = new ArrayList<>();
+        Peykan paykan = new Peykan();
 
-        Human person1 = new Human("javad", 22, 78, 170);
-        Human person2 = new Human("hassan", 22, 78, 184);
+        // ---------- set engine -----------
+        Engine perykanEngine = new Engine();
+        perykanEngine.setHp(70);
+        perykanEngine.setCylandrCount(4);
+        paykan.setEngine(perykanEngine);
 
-        Human person3 = new Human();
-        person3.setName("zahra");
-        person3.setWeight(76);
-        person3.setHeight(165);
-        try {
-            person3.setAge(28);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-        }
+        // ---------- set tire -----------
+        Tire peykanTire = new Tire();
+        peykanTire.setBrand("barez");
+        peykanTire.setSize(15);
+        paykan.setTire(peykanTire);
+        paykan.setColor("Red");
 
-        humanArrayList.add(person1);
-        humanArrayList.add(person2);
-        humanArrayList.add(person3);
-        for (Human person : humanArrayList) {
-            if (person.getName().equals("javad")) {
-                System.out.println(person);
-            }
-        }
+        System.out.println(paykan);
+        System.out.println("==========================");
+
+        Pars pars = new Pars();
+
+        // ---------- set engine -----------
+        Engine parsEngine = new Engine();
+        parsEngine.setHp(70);
+        parsEngine.setCylandrCount(4);
+        pars.setEngine(parsEngine);
+
+        // ---------- set tire -----------
+        Tire parsTire = new Tire();
+        parsTire.setBrand("barez");
+        parsTire.setSize(15);
+        pars.setTire(parsTire);
+        pars.setWeight(1100);
+
+        System.out.println(pars);
 
 
     }
