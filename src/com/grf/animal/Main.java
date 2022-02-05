@@ -2,14 +2,15 @@ package com.grf.animal;
 
 public class Main {
     public static void main(String[] args) {
-        Person person= new Person();
-        person.setName("ali");
-        PhoneBook.add(person);
+        Box box1 = new Box();
+        box1.setCity("tehran");
+        IDelivery delivery1 = DeliveryFactory.getInstance(box1);
+        delivery1.sending();
 
-        Person person2= new Person();
-        person.setName("reza");
-        PhoneBook.add(person2);
+        Box box2 = new Box();
+        box2.setCity("melborn");
+        IDelivery delivery2 = DeliveryFactory.getInstance(box2);
+        delivery2.sending();
 
-        System.out.println(PhoneBook.getInstance());
     }
 }
