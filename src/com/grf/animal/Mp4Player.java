@@ -1,8 +1,13 @@
 package com.grf.animal;
 
-public class Mp4Player implements IMediaPlayer{
+public class Mp4Player extends MediaPlayer {
     @Override
-    public void play() {
-        System.out.println("mp4 playing");
+    protected void load() {
+        System.out.println("load mp4 file");
+    }
+
+    @Override
+    protected void uncompress() {
+        System.out.println("uncompress mp4 file");
     }
 }
