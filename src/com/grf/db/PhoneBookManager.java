@@ -86,4 +86,18 @@ public class PhoneBookManager {
         person.setId(scanner.nextInt());
         return person;
     }
+
+    public ArrayList<Person> searchById(int id) {
+        return null;
+    }
+
+    public ArrayList<Person> searchByName(String name) {
+        return null;
+    }
+
+    public ArrayList<Person> searchByNumber(String number) {
+        return null;
+    }
+
+
 }
