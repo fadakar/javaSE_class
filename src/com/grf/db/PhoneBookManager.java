@@ -3,6 +3,7 @@ package com.grf.db;
 import com.grf.db.model.bl.PersonBL;
 import com.grf.db.model.to.Person;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class PhoneBookManager {
     }
 
 
-    public void run() throws SQLException {
+    public void run() throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         Person person;
         ArrayList<Person> people;
 
@@ -69,6 +70,8 @@ public class PhoneBookManager {
                     }
                     break;
                 case 4:
+                    person = editPersonAction();
+                personBL.update(person);
                     break;
                 case 5:
                     try {
@@ -107,6 +110,19 @@ public class PhoneBookManager {
         person.setNumber(scanner.next());
         return person;
     }
+
+
+    public Person editPersonAction() {
+        Person person = new Person();
+        System.out.print("Enter id: ");
+        person.setId(scanner.nextInt());
+        System.out.print("Enter name:");
+        person.setName(scanner.next());
+        System.out.print("Enter number: ");
+        person.setNumber(scanner.next());
+        return person;
+    }
+
 
     public int deletePersonAction() {
         System.out.print("Enter id: ");
