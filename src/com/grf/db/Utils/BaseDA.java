@@ -30,6 +30,21 @@ public abstract class BaseDA<T> {
         return items;
     }
 
+    public T find(int id) throws SQLException {
+        Connection connection = createConnection();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + primaryKey + " = " + id);
+        T item = newInstance();
+        try {
+            rs.next();
+            fillItem(rs, item); // fill all fields from result set
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        return item;
+    }
+
     public void add(T item) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Connection connection = createConnection();
         String fieldNames = "";

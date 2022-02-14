@@ -3,6 +3,7 @@ package com.grf.db;
 import com.grf.db.model.bl.PersonBL;
 import com.grf.db.model.to.Person;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,30 +12,57 @@ public class PhoneBookManager {
     private Scanner scanner = new Scanner(System.in);
     private PersonBL personBL;
 
-    public PhoneBookManager() {
+    public PhoneBookManager() throws ClassNotFoundException {
         this.personBL = new PersonBL();
     }
 
 
-    public void run() {
+    public void run() throws SQLException {
+        Person person;
+        ArrayList<Person> people;
 
         while (true) {
             switch (showMainMenu()) {
                 case 1:
                     try {
                         ArrayList<Person> persons = personBL.all();
-                        for (Person person : persons) {
-                            System.out.println(person);
+                        for (Person item : persons) {
+                            System.out.println(item);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
                 case 2:
+                    switch (searchMenu()) {
+                        case 1:
+                            int id = searchByIdAction();
+                            person = personBL.find(id);
+                            if (person != null) {
+                                System.out.println("Founded: " + person);
+                            }
+                            break;
+                        case 2:
+                            String name = searchByNameAction();
+                            people = personBL.searchByName(name);
+                            for (Person item : people) {
+                                System.out.println("Founded: " + item);
+                            }
+                            break;
+                        case 3:
+                            String number = searchByNumberAction();
+                            people = personBL.searchByNumber(number);
+                            for (Person item : people) {
+                                System.out.println("Founded: " + item);
+                            }
+                            break;
+                        case 4:
+                            break;
+                    }
                     break;
                 case 3:
                     try {
-                        Person person = addPerson();
+                        person = addPersonAction();
                         personBL.add(person);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -44,8 +72,8 @@ public class PhoneBookManager {
                     break;
                 case 5:
                     try {
-                        Person person = deletePerson();
-                        personBL.delete(person.getId());
+                        int id = deletePersonAction();
+                        personBL.delete(id);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -59,17 +87,17 @@ public class PhoneBookManager {
 
     public int showMainMenu() {
         System.out.println("--------------------------");
-        System.out.println("[1] show all person");
-        System.out.println("[2] search person");
-        System.out.println("[3] add person");
-        System.out.println("[4] update person");
-        System.out.println("[5] delete person");
+        System.out.println("[1] show all");
+        System.out.println("[2] search");
+        System.out.println("[3] add");
+        System.out.println("[4] edit");
+        System.out.println("[5] delete");
         System.out.println("[6] exit");
         System.out.print(": ");
         return scanner.nextInt();
     }
 
-    public Person addPerson() {
+    public Person addPersonAction() {
         Person person = new Person();
         System.out.print("Enter id: ");
         person.setId(scanner.nextInt());
@@ -80,23 +108,34 @@ public class PhoneBookManager {
         return person;
     }
 
-    public Person deletePerson() {
-        Person person = new Person();
+    public int deletePersonAction() {
         System.out.print("Enter id: ");
-        person.setId(scanner.nextInt());
-        return person;
+        return scanner.nextInt();
     }
 
-    public ArrayList<Person> searchById(int id) {
-        return null;
+    public int searchMenu() {
+        System.out.println("--------------------------");
+        System.out.println("[1] By id");
+        System.out.println("[2] By name");
+        System.out.println("[3] By number");
+        System.out.println("[4] back");
+        System.out.print(": ");
+        return scanner.nextInt();
     }
 
-    public ArrayList<Person> searchByName(String name) {
-        return null;
+    public int searchByIdAction() {
+        System.out.print("Enter id: ");
+        return scanner.nextInt();
     }
 
-    public ArrayList<Person> searchByNumber(String number) {
-        return null;
+    public String searchByNameAction() {
+        System.out.print("Enter name: ");
+        return scanner.next();
+    }
+
+    public String searchByNumberAction() {
+        System.out.print("Enter number: ");
+        return scanner.next();
     }
 
 
