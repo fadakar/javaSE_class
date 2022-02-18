@@ -13,7 +13,8 @@ public class PersonDA extends BaseDA<Person> {
         Class.forName("com.mysql.cj.jdbc.Driver");
         table = "person";
         primaryKey = "id";
-        fields = new ArrayList<>(Arrays.asList("id", "name", "number"));
+        fields = new ArrayList<>(Arrays.asList("id", "name", "number", "userId"));
+        gaurd = new ArrayList<>(Arrays.asList("id"));
     }
 
     @Override
@@ -58,5 +59,14 @@ public class PersonDA extends BaseDA<Person> {
         }
         closeConnection(connection);
         return people;
+    }
+
+    public void deleteByIdAndUserId(int id, int userId) throws SQLException {
+        Connection connection = createConnection();
+        PreparedStatement st = connection.prepareStatement("delete from person where " + primaryKey + "=? and userId = ?");
+        st.setInt(1, id);
+        st.setInt(2, userId);
+        st.executeUpdate();
+        closeConnection(connection);
     }
 }

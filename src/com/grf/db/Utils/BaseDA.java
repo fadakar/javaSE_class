@@ -10,6 +10,7 @@ public abstract class BaseDA<T> {
     protected String table = "";
     protected String primaryKey = "id";
     protected ArrayList<String> fields;
+    protected ArrayList<String> gaurd;
 
     public ArrayList<T> all() throws SQLException {
         Connection connection = createConnection();
@@ -50,6 +51,9 @@ public abstract class BaseDA<T> {
         String fieldNames = "";
         String values = "";
         for (String field : fields) {
+            if (gaurd.contains(field))
+                continue;
+
             fieldNames += field + ",";
 
             field = field.substring(0, 1).toUpperCase() + field.substring(1); // capitalize field name from id to Id
@@ -75,6 +79,8 @@ public abstract class BaseDA<T> {
         Object pkValue = "";
         String values = "";
         for (String field : fields) {
+            if (gaurd.contains(field))
+                continue;
             field = field.substring(0, 1).toUpperCase() + field.substring(1); // capitalize field name from id to Id
             Method method = item.getClass().getMethod("get" + field); // get SetName method for example
             method.setAccessible(true); // This is important if you want to access protected or private method. For public method you can skip

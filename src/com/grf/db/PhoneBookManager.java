@@ -1,7 +1,10 @@
 package com.grf.db;
 
+import com.grf.db.Auth.Auth;
+import com.grf.db.model.DTO.UserRegisterDTO;
 import com.grf.db.model.bl.PersonBL;
 import com.grf.db.model.to.Person;
+import com.grf.db.model.to.User;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -12,9 +15,11 @@ public class PhoneBookManager {
 
     private Scanner scanner = new Scanner(System.in);
     private PersonBL personBL;
+    private Auth auth;
 
     public PhoneBookManager() throws ClassNotFoundException {
-        this.personBL = new PersonBL();
+        personBL = new PersonBL();
+        auth = new Auth();
     }
 
 
@@ -23,87 +28,146 @@ public class PhoneBookManager {
         ArrayList<Person> people;
 
         while (true) {
-            switch (showMainMenu()) {
-                case 1:
-                    try {
-                        ArrayList<Person> persons = personBL.all();
-                        for (Person item : persons) {
-                            System.out.println(item);
+            if (auth.check()) {
+                switch (showMainMenu()) {
+                    case 1:
+                        try {
+                            ArrayList<Person> persons = personBL.all(auth.getId());
+                            if (persons.size() == 0) {
+                                System.out.println("[info] Your Contact List Is Empty");
+                            } else {
+                                for (Person item : persons) {
+                                    System.out.println(item);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 2:
-                    switch (searchMenu()) {
-                        case 1:
-                            int id = searchByIdAction();
-                            person = personBL.find(id);
-                            if (person != null) {
-                                System.out.println("Founded: " + person);
-                            }
+                        break;
+                    case 2:
+                        switch (searchMenu()) {
+                            case 1:
+                                int id = searchByIdAction();
+                                person = personBL.find(id, auth.getId());
+                                if (person != null) {
+                                    System.out.println("Founded: " + person);
+                                }
+                                break;
+                            case 2:
+                                String name = searchByNameAction();
+                                people = personBL.searchByName(name);
+                                for (Person item : people) {
+                                    System.out.println("Founded: " + item);
+                                }
+                                break;
+                            case 3:
+                                String number = searchByNumberAction();
+                                people = personBL.searchByNumber(number);
+                                for (Person item : people) {
+                                    System.out.println("Founded: " + item);
+                                }
+                                break;
+                            case 4:
+                                break;
+                        }
+                        break;
+                    case 3:
+                        try {
+                            person = addPersonAction();
+                            person.setUserId(auth.getId());
+                            personBL.add(person);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 4:
+                        person = editPersonAction();
+                        personBL.update(person, auth.getId());
+                        break;
+                    case 5:
+                        try {
+                            int id = deletePersonAction();
+                            personBL.delete(id, auth.getId());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 6:
+                        auth.logout();
+                        break;
+                }
+            } else {
+                switch (showAuthMenu()) {
+                    case 1:
+                        User user = showAuthLoginAction();
+                        boolean isLogin = auth.login(user.getUsername(), user.getPassword());
+                        if (!isLogin) {
+                            System.out.println("[error] Username or password is incorrect");
+                        }
+                        break;
+                    case 2:
+                        UserRegisterDTO userRegisterDTO = showAuthRegisterAction();
+                        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getRepassword())) {
+                            System.out.println("[error] Entered password not same, please try again");
                             break;
-                        case 2:
-                            String name = searchByNameAction();
-                            people = personBL.searchByName(name);
-                            for (Person item : people) {
-                                System.out.println("Founded: " + item);
-                            }
-                            break;
-                        case 3:
-                            String number = searchByNumberAction();
-                            people = personBL.searchByNumber(number);
-                            for (Person item : people) {
-                                System.out.println("Founded: " + item);
-                            }
-                            break;
-                        case 4:
-                            break;
-                    }
-                    break;
-                case 3:
-                    try {
-                        person = addPersonAction();
-                        personBL.add(person);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 4:
-                    person = editPersonAction();
-                personBL.update(person);
-                    break;
-                case 5:
-                    try {
-                        int id = deletePersonAction();
-                        personBL.delete(id);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 6:
-                    System.exit(0);
-                    break;
+                        }
+                        auth.register(userRegisterDTO.getUsername(), userRegisterDTO.getPassword());
+                        System.out.println("You are registered, you can login now");
+                        break;
+                    case 3:
+                        System.exit(0);
+                }
             }
+
         }
+    }
+
+
+    public int showAuthMenu() {
+        System.out.println("--------------------------");
+        System.out.println("[1] Login");
+        System.out.println("[2] Register");
+        System.out.println("[3] Exit");
+        System.out.print(": ");
+        return scanner.nextInt();
+    }
+
+    public User showAuthLoginAction() {
+        User user = new User();
+        System.out.println("--------------------------");
+        System.out.print("[1] Enter Username:");
+        user.setUsername(scanner.next());
+        System.out.print("[1] Enter Password:");
+        user.setPassword(scanner.next());
+        return user;
+    }
+
+    public UserRegisterDTO showAuthRegisterAction() {
+        UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+        System.out.println("--------------------------");
+        System.out.print("[1] Enter Username:");
+        userRegisterDTO.setUsername(scanner.next());
+        System.out.print("[1] Enter Password:");
+        userRegisterDTO.setPassword(scanner.next());
+        System.out.print("[1] Enter Password again:");
+        userRegisterDTO.setRepassword(scanner.next());
+        return userRegisterDTO;
     }
 
     public int showMainMenu() {
         System.out.println("--------------------------");
-        System.out.println("[1] show all");
-        System.out.println("[2] search");
-        System.out.println("[3] add");
-        System.out.println("[4] edit");
-        System.out.println("[5] delete");
-        System.out.println("[6] exit");
+        System.out.println("[1] Show all");
+        System.out.println("[2] Search");
+        System.out.println("[3] Add");
+        System.out.println("[4] Edit");
+        System.out.println("[5] Delete");
+        System.out.println("[6] Logout");
         System.out.print(": ");
         return scanner.nextInt();
     }
 
     public Person addPersonAction() {
         Person person = new Person();
-        System.out.print("Enter id: ");
-        person.setId(scanner.nextInt());
         System.out.print("Enter name: ");
         person.setName(scanner.next());
         System.out.print("Enter number: ");
