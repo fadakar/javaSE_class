@@ -29,6 +29,7 @@ public class PhoneBookManager {
 
         while (true) {
             if (auth.check()) {
+                // phonebook menu
                 switch (showMainMenu()) {
                     case 1:
                         try {
@@ -102,6 +103,7 @@ public class PhoneBookManager {
                         break;
                 }
             } else {
+                // auth menu
                 switch (showAuthMenu()) {
                     case 1:
                         User user = showAuthLoginAction();
@@ -112,7 +114,7 @@ public class PhoneBookManager {
                         break;
                     case 2:
                         UserRegisterDTO userRegisterDTO = showAuthRegisterAction();
-                        
+
                         // check user not exists
                         if (auth.hasUser(userRegisterDTO.getUsername())) {
                             System.out.println("[error] username " + userRegisterDTO.getUsername() + " is already exist, try login");
