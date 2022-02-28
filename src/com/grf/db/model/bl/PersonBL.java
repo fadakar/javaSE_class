@@ -31,12 +31,12 @@ public class PersonBL {
         return null;
     }
 
-    public void add(Person person) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void add(Person person) throws SQLException {
         personDA.add(person);
     }
 
-    public void update(Person person, int userId) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        if (person.getUserId() == userId) {
+    public void update(Person person, int userId) throws SQLException {
+        if (person != null && person.getUserId() == userId) {
             personDA.update(person);
         }
     }

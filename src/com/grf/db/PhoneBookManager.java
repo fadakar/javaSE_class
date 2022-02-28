@@ -87,7 +87,12 @@ public class PhoneBookManager {
                     case 5:
                         try {
                             int id = deletePersonAction();
-                            personBL.delete(id, auth.getId());
+                            Person findPerson = personBL.find(id, auth.getId());
+                            if (findPerson != null) {
+                                personBL.delete(id, auth.getId());
+                            } else {
+                                System.out.println("[error] Contact not found");
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -176,14 +181,18 @@ public class PhoneBookManager {
     }
 
 
-    public Person editPersonAction() {
-        Person person = new Person();
+    public Person editPersonAction() throws SQLException {
         System.out.print("Enter id: ");
-        person.setId(scanner.nextInt());
-        System.out.print("Enter name:");
-        person.setName(scanner.next());
-        System.out.print("Enter number: ");
-        person.setNumber(scanner.next());
+        int id = scanner.nextInt();
+        Person person = personBL.find(id, auth.getId());
+        if (person != null) {
+            System.out.print("Enter name:");
+            person.setName(scanner.next());
+            System.out.print("Enter number: ");
+            person.setNumber(scanner.next());
+        } else {
+            System.out.println("[error] Contact not found");
+        }
         return person;
     }
 
