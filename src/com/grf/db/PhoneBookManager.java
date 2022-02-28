@@ -112,10 +112,20 @@ public class PhoneBookManager {
                         break;
                     case 2:
                         UserRegisterDTO userRegisterDTO = showAuthRegisterAction();
+                        
+                        // check user not exists
+                        if (auth.hasUser(userRegisterDTO.getUsername())) {
+                            System.out.println("[error] username " + userRegisterDTO.getUsername() + " is already exist, try login");
+                            break;
+                        }
+
+                        // check password and repassword
                         if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getRepassword())) {
                             System.out.println("[error] Entered password not same, please try again");
                             break;
                         }
+
+                        // create new user
                         auth.register(userRegisterDTO.getUsername(), userRegisterDTO.getPassword());
                         System.out.println("You are registered, you can login now");
                         break;

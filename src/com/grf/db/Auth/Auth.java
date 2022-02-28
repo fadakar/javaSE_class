@@ -53,5 +53,14 @@ public class Auth {
         userBL.register(username, Hash.MD5(password.trim()));
     }
 
+    public boolean hasUser(String username) throws SQLException {
+        User user = userBL.findByUsername(username);
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
